@@ -11,7 +11,7 @@ spring:
     defer-datasource-initialization: true
     spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
   kafka:
-    brokers: localhost:9092
+    bootstrap-servers: 127.0.0.1:9092
     consumer-id: consumer-0
     consumer:
       group-id: open-close-frontend-0

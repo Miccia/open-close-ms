@@ -1,0 +1,36 @@
+version: '2'
+
+services:
+  backend-service-1:
+    container_name: backend-0
+    build:
+        context: ../../spring-boot/microservices/openclose-service
+        dockerfile: Dockerfile
+    image:
+      openclose-service:latest
+    depends_on:
+      - kafka
+    ports:
+      - "8080:8080"
+  frontend-service-1:
+    container_name: frontend-0
+    build:
+        context: ../../spring-boot/microservices/frontend-service
+        dockerfile: Dockerfile
+    image:
+      frontend-service:latest
+    depends_on:
+      - kafka
+    ports:
+      - "8081:8080"
+  frontend-service-2:
+    container_name: frontend-1
+    build:
+        context: ../../spring-boot/microservices/frontend-service
+        dockerfile: Dockerfile
+    image:
+      frontend-service:latest
+    depends_on:
+      - kafka
+    ports:
+      - "8082:8080"
