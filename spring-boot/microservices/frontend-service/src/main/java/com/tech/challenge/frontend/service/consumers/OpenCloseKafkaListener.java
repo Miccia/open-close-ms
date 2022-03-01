@@ -23,7 +23,12 @@ public class OpenCloseKafkaListener {
     @KafkaListener(topics="${spring.kafka.consumerTopic}")
     void listen(String data){
         log.info("incoming data:{}",data);
-       
+        try{
+            RestaurantDTO incoming = objMapper.readValue(data,RestaurantDTO.class);
+            restaurantService.updateRestaurantStatus(incoming.getId(), incoming.getIsOpen());
+        }catch(Exception e){
+            log.error("{} while serializing data : {}",e.getClass(),e.getMessage());
+        }
     }
 
 
