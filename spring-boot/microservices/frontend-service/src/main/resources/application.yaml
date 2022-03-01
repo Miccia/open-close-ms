@@ -10,6 +10,12 @@ spring:
       ddl-auto: create
     defer-datasource-initialization: true
     spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
-
+  kafka:
+    brokers: localhost:9092
+    consumer-id: consumer
+    consumer:
+      group-id: open-close-frontend
+    consumerTopic: open_close_restaurants
+    isolation-level: read_committed
 server:
   port: 8081
