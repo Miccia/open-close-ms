@@ -15,5 +15,5 @@ producer:
   kafka:
     topics:
       partitionNumber: 1
-      replicaFactor: 2
+      replicaFactor: 1
       restaurantsTopic: open_close_restaurants
