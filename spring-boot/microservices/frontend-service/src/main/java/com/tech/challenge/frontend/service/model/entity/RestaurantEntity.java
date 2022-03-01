@@ -19,7 +19,6 @@ public class RestaurantEntity {
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "id")
     private String id;
-
     @Column(name="name")
     private String name;
     @Column(name="description")
@@ -28,6 +27,4 @@ public class RestaurantEntity {
     private String address;
     @Column(name="is_open")
     private Boolean isOpen;
-
-
 }

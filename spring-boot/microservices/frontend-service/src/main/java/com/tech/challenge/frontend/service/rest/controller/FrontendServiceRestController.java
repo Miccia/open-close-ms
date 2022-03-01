@@ -25,11 +25,10 @@ public class FrontendServiceRestController {
     enum RestaurantStatus{ALL,OPEN,CLOSED}
 
     @GetMapping("list/{status}")
-    public ResponseEntity<Object> getAllRestaurants(@PathVariable(name="status",required = false) Optional<RestaurantStatus> status){
-       log.info("status : {} ctrl:{}",status.orElse(null),RestaurantStatus.ALL.compareTo(status.get()));
-
-        return ResponseEntity.ok(restaurantService.findAll());
+    public ResponseEntity<Object> getAllRestaurants(@PathVariable(name="status",required = true) RestaurantStatus status){
+        if(status.equals(RestaurantStatus.ALL))
+            return ResponseEntity.ok(restaurantService.findAll());
+        else return ResponseEntity.ok(restaurantService.findByStatus(status.equals(RestaurantStatus.OPEN)?true:false));
     }
-
 
 }

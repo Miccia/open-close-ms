@@ -8,5 +8,5 @@ public interface RestaurantEntityService {
 
     void updateRestaurantStatus(String restaurantId, Boolean status);
     List<RestaurantDTO> findAll();
-
+    List<RestaurantDTO> findByStatus(boolean status);
 }

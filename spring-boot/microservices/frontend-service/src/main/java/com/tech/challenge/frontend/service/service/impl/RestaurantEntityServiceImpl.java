@@ -18,6 +18,7 @@ public class RestaurantEntityServiceImpl implements RestaurantEntityService {
     @Autowired
     RestaurantMapper mapper;
 
+
     @Override
     public void updateRestaurantStatus(String restaurantId,Boolean status){
         repo.updateStatusById(restaurantId,status);
@@ -32,4 +33,12 @@ public class RestaurantEntityServiceImpl implements RestaurantEntityService {
         return res;
     }
 
+    @Override
+    public List<RestaurantDTO> findByStatus(boolean status){
+        List<RestaurantDTO> res = new ArrayList<>();
+        repo.findByIsOpen(status).forEach(restEntity->{
+            res.add(mapper.toDto(restEntity));
+        });
+        return res;
+    }
 }
