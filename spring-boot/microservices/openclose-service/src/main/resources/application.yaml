@@ -10,3 +10,8 @@ spring:
       ddl-auto: create
     defer-datasource-initialization: true
     spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
+
+producer:
+  kafka:
+    topics:
+      restaurantsTopic: open_close_restaurants
