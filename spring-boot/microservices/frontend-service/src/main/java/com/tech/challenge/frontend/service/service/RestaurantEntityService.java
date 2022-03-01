@@ -5,7 +5,8 @@ import com.tech.challenge.frontend.service.model.dto.RestaurantDTO;
 import java.util.List;
 
 public interface RestaurantEntityService {
-    void updateRestaurantStatus(String restaurantId, Boolean status);
 
+    void updateRestaurantStatus(String restaurantId, Boolean status);
     List<RestaurantDTO> findAll();
+
 }
