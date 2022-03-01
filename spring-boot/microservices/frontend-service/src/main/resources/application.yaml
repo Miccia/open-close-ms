@@ -12,9 +12,9 @@ spring:
     spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
   kafka:
     brokers: localhost:9092
-    consumer-id: consumer
+    consumer-id: consumer-0
     consumer:
-      group-id: open-close-frontend
+      group-id: open-close-frontend-0
     consumerTopic: open_close_restaurants
     isolation-level: read_committed
 server:
