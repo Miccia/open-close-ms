@@ -14,7 +14,8 @@ public class KafkaProducer implements MessagePublisher {
 
  private static final Logger log = LoggerFactory.getLogger(KafkaProducer.class);
  private final KafkaTemplate<String,String> kTemplate;
-@Autowired
+
+    @Autowired
     ObjectMapper objMapper;
 
      public KafkaProducer(KafkaTemplate kTemplate){
@@ -29,7 +30,8 @@ public class KafkaProducer implements MessagePublisher {
 
     @Override
     public void publishObject(String topic, Object msg) throws JsonProcessingException {
-         String jsonMsg = objMapper.writeValueAsString(msg);
+
+        String jsonMsg = objMapper.writeValueAsString(msg);
         log.info("publishing on topic:[{}], msg:{}",topic,jsonMsg);
         kTemplate.send(topic,jsonMsg);
     }

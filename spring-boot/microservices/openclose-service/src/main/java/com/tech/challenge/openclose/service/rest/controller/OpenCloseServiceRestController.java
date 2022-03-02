@@ -1,7 +1,7 @@
 package com.tech.challenge.openclose.service.rest.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.tech.challenge.openclose.service.config.TopicConfiguration;
+import com.tech.challenge.openclose.service.config.KafkaConfiguration;
 import com.tech.challenge.openclose.service.model.dto.RestaurantDTO;
 import com.tech.challenge.openclose.service.service.MessagePublisher;
 import com.tech.challenge.openclose.service.service.RestaurantEntityService;
@@ -22,7 +22,7 @@ public class OpenCloseServiceRestController {
     @Autowired
     RestaurantEntityService entityService;
     @Autowired
-    TopicConfiguration topicConfig;
+    KafkaConfiguration kafkaConfiguration;
     
     @PostMapping(value="update/{id}")
     public ResponseEntity<String> updateRestaurantStatus(@PathVariable("id") String id,
@@ -32,7 +32,7 @@ public class OpenCloseServiceRestController {
         RestaurantDTO restaurant = new RestaurantDTO();
         restaurant.setId(id);
         restaurant.setIsOpen(isOpen);
-        kProducer.publishObject(topicConfig.getRestaurantsTopic(),restaurant);
+        kProducer.publishObject(kafkaConfiguration.getProducerTopic(),restaurant);
 
         return ResponseEntity.ok("");
     }

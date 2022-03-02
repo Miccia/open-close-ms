@@ -11,9 +11,11 @@ spring:
     defer-datasource-initialization: true
     spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
 
-producer:
+be:
   kafka:
-    topics:
+    producer:
       partitionNumber: 1
       replicaFactor: 1
-      restaurantsTopic: open_close_restaurants
+      producerTopic: open_close_restaurants
+      brokers: localhost:9092
+      producerId: openclose-be-service-0
