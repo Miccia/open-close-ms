@@ -39,6 +39,7 @@ class RestaurantList extends React.Component{
 					{restaurants}
 				</tbody>
 			</table>
+
 		)
 	}
 }
