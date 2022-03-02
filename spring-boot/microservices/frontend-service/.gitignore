@@ -1,9 +1,15 @@
 HELP.md
 target/
+*.log
+
+## NPM ##
+node_modules/
+node/
+package-lock.json
+
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-
 ### STS ###
 .apt_generated
 .classpath
