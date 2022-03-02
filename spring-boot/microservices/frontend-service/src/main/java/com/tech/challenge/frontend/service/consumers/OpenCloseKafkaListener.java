@@ -20,7 +20,7 @@ public class OpenCloseKafkaListener {
     @Autowired
     RestaurantEntityService restaurantService;
 
-    @KafkaListener(topics="${spring.kafka.consumerTopic}")
+    @KafkaListener(topics="${fe.kafka.consumer.consumerTopic}")
     void listen(String data){
         log.info("incoming data:{}",data);
         try{
