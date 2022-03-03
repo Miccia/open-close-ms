@@ -1,5 +1,4 @@
 version: '2'
-
 services:
   zookeeper:
     container_name: 
@@ -11,15 +10,17 @@ services:
       - "2181:2181"
     networks:
       - kafka_merge_net
-  kafka1:
+  kafka-1:
+    container_name: kafka-1
     image: confluentinc/cp-kafka:5.3.0
     hostname: kafka1
     ports:
       - "9092:9092"
     environment:
-      KAFKA_ADVERTISED_LISTENERS: LISTENER_DOCKER_INTERNAL://kafka1:9092
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: LISTENER_DOCKER_INTERNAL:PLAINTEXT,LISTENER_DOCKER_EXTERNAL:PLAINTEXT
-      KAFKA_INTER_BROKER_LISTENER_NAME: LISTENER_DOCKER_INTERNAL
+      KAFKA_LISTENERS: EXTERNAL_SAME_HOST://:29092,INTERNAL://:9092
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka1:9092,EXTERNAL_SAME_HOST://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL_SAME_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
       KAFKA_ZOOKEEPER_CONNECT: "zoo:2181"
       KAFKA_BROKER_ID: 1
       KAFKA_LOG4J_LOGGERS: "kafka.controller=INFO,kafka.producer.async.DefaultEventHandler=INFO,state.change.logger=INFO"
@@ -27,27 +28,15 @@ services:
       - ./zk-single-kafka-multiple/kafka1/data:/var/lib/kafka/data
     depends_on:
       - zoo
-
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - kafka_merge_net
-  backend-service-1:
-    container_name: backend-0
-    build:
-        context: ../../spring-boot/microservices/openclose-service
-        dockerfile: Dockerfile
-    image:
-      openclose-service:latest
-    ports:
-      - "8080:8080"
-    depends_on:
-      - kafka1
-    networks:
-      - kafka_merge_net
-    environment:
+
   frontend-service-0:
     container_name: frontend-0
+    depends_on:
+      - kafka1
     build:
         context: ../../spring-boot/microservices/frontend-service
         dockerfile: Dockerfile
@@ -55,23 +44,14 @@ services:
       frontend-service:latest
     ports:
       - "8081:8080"
-    depends_on:
-      - kafka1
-    networks:
+    environment:
+      SERVER_PORT: 8080
+      FE_KAFKA_CONSUMER_BROKERS: kafka1:9092
+      FE_KAFKA_CONSUMER_CONSUMER_ID: frontend-0
+      FE_KAFKA_CONSUMER_GROUP_ID: frontend-group-0
+    networks:     
       - kafka_merge_net
-  frontend-service-1:
-    container_name: frontend-1
-    build:
-        context: ../../spring-boot/microservices/frontend-service
-        dockerfile: Dockerfile
-    image:
-      frontend-service:latest
-    ports:
-      - "8081:8080"
-    depends_on:
-      - kafka1
-    networks:
-      - kafka_merge_net
+
 networks:
   kafka_merge_net:
     driver: bridge
