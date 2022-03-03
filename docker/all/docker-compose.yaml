@@ -66,6 +66,24 @@ services:
       FE_KAFKA_CONSUMER_GROUP_ID: frontend-group-0
     networks:     
       - kafka_merge_net
+  frontend-service-1:
+    container_name: frontend-1
+    depends_on:
+      - kafka0
+    build:
+        context: ../../spring-boot/microservices/frontend-service
+        dockerfile: Dockerfile
+    image:
+      frontend-service:latest
+    ports:
+      - "8082:8080"
+    environment:
+      SERVER_PORT: 8080
+      FE_KAFKA_CONSUMER_BROKERS: kafka0:9092
+      FE_KAFKA_CONSUMER_CONSUMER_ID: frontend-1
+      FE_KAFKA_CONSUMER_GROUP_ID: frontend-group-1
+    networks:     
+      - kafka_merge_net
 
 networks:
   kafka_merge_net:
