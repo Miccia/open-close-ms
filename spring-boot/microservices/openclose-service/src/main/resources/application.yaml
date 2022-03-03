@@ -17,5 +17,5 @@ be:
       partitionNumber: 1
       replicaFactor: 1
       producerTopic: open_close_restaurants
-      brokers: localhost:9092
+      brokers: magarisubito:9092
       producerId: openclose-be-service-0
