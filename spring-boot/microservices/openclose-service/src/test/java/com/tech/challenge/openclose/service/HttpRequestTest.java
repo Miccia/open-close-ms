@@ -46,4 +46,21 @@ public class HttpRequestTest {
                 .andDo(print())
                 .andExpect(status().isInternalServerError());
     }
+
+    @Test
+    public void testIsOpenService_OK() throws Exception {
+
+        this.mockMvc.perform(get("/restaurants/status/first"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("closed")));
+
+    }    @Test
+    public void testIsOpenService_KO() throws Exception {
+
+        this.mockMvc.perform(get("/restaurants/status/forst"))
+                .andDo(print())
+                .andExpect(status().isNotFound());
+
+    }
 }

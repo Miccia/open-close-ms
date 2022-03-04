@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
+
 @RestController
 @RequestMapping("restaurants")
 public class OpenCloseServiceRestController {
@@ -37,5 +39,15 @@ public class OpenCloseServiceRestController {
         return ResponseEntity.accepted().body(id+" updated");
     }
 
+    @GetMapping(value="status/{id}")
+    public ResponseEntity<String> getRestaurantStatus(@PathVariable("id") String id) throws JsonProcessingException {
+        RestaurantDTO restaurant;
+        try {
+           restaurant = entityService.getRestaurantById(id);
+        }catch(EntityNotFoundException notFound){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(String.format("Restaurant %s is %s",restaurant.getName(),restaurant.getIsOpen()?"open":"closed"));
+    }
 
 }
