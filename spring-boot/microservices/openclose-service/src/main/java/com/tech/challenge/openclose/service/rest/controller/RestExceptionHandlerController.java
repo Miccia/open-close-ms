@@ -1,5 +1,6 @@
 package com.tech.challenge.openclose.service.rest.controller;
 
+import org.apache.tomcat.util.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,7 @@ public class RestExceptionHandlerController {
     public ResponseEntity<Object> handleGenericException(Exception e){
         e.printStackTrace();
         log.error("exception :{}, {}, {}",e.getClass(),e.getMessage(),e.getCause());
-            return new ResponseEntity<>(e,HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
 }

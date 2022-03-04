@@ -34,7 +34,7 @@ public class OpenCloseServiceRestController {
         restaurant.setIsOpen(isOpen);
         kProducer.publishObject(kafkaConfiguration.getProducerTopic(),restaurant);
 
-        return ResponseEntity.ok("");
+        return ResponseEntity.accepted().body(id+" updated");
     }
 
 

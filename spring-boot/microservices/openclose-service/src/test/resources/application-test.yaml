@@ -10,7 +10,9 @@ spring:
       ddl-auto: create
     defer-datasource-initialization: true
     spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
-
+kafka:
+  test:
+    enabled: false
 be:
   kafka:
     producer:
