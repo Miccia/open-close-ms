@@ -1,0 +1,22 @@
+kafka:
+  test:
+    enabled: false
+spring:
+  datasource:
+    initialization-mode: always
+    url: jdbc:h2:mem:openclose
+    username: sa
+    password: password
+    driverClassName: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create
+    defer-datasource-initialization: true
+    spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
+fe.kafka:
+  consumer:
+    brokers: localhost:9092
+    consumerId: fe-consumer-0
+    groupId: fe-consumer-group-0
+    consumerTopic: open_close_restaurants
+    isolationLevel: read_committed

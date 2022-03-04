@@ -30,10 +30,6 @@ public class HttpRequestTest {
     @MockBean
     KafkaProducer kafkaProd;
 
-    @Autowired
-    KafkaConfiguration kafkaConfiguration;
-
-
     @Test
     public void testUpdate_OK() throws Exception {
 
