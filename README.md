@@ -4,7 +4,9 @@
 **contents**
 
 [TOC]
+
 ##Architecture
+
 [![architecture diagram](https://github.com/Miccia/open-close-ms/blob/1.0dev/diagram.png "architecture diagram")](https://github.com/Miccia/open-close-ms/blob/1.0dev/diagram.png "architecture diagram")
 The solution is composed of two spring-boot application:
 - frontend-service
