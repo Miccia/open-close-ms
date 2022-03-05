@@ -5,7 +5,7 @@
 
 [TOC]
 
-##Architecture
+## Architecture
 
 [![architecture diagram](https://github.com/Miccia/open-close-ms/blob/1.0dev/diagram.png "architecture diagram")](https://github.com/Miccia/open-close-ms/blob/1.0dev/diagram.png "architecture diagram")
 The solution is composed of two spring-boot application:
@@ -14,17 +14,19 @@ The solution is composed of two spring-boot application:
 Which communicates via a kafka topic and expose REST apis.
 Everything id dockerized with a 1 publisher 2 subscriber configuration
 
-##Execution
+## Execution
 
 to run the solution you need to: 
 `docker compose up --build`
 inside the docker/all folder, the frontend addresses are: http://localhost:8081/ and http://localhost:8082/
 
-##Testing
+## Testing
 
-to test the functionality you can access the REST apis under http://localhost:8080/swagger-ui/index.html#/ or use the justeat.postman_collection.json
+to test the functionality you can access the swagger-ui  under http://localhost:PORT/swagger-ui/index.html#/ or use the justeat.postman_collection.json
+where PORT is:
+8080 for the backend
+8081 & 8082 for the frontend
 the microservices initial data status is:
-restaurant
 
 
 | id  | name | description | status |
@@ -37,7 +39,7 @@ restaurant
 |sixth|Instanbul Kebab|kebab piadine|open|
 |seventh|Yo Fusion|Sushi Bar|closed|
 
-##Frontend-service
+## Frontend-service
 
 this service implements a kafka listener to receive restaurants status change and update it's internal status.
 It exposes a REST api to get a list of restaurants filtered by status and a React front-end
@@ -48,11 +50,11 @@ that displays a list of all open restaurants
 this service implements a kafka producer to publish restaurants status change.
 It exposes a REST api to change a restaurant status and get the status by id
 
-##Scalability
+## Scalability
 
 horizontal scalability is achieved by creating subscriber microservices with different group ids, by doing this we ensure that each message present on the topic is consumed by all the subscribers
 
-##Issues
+## Issues
 
 - Data 
 Using dedicated data sources for the consumers does not ensure proper data replication or initialization for every consumer, to solve this we 
@@ -61,7 +63,7 @@ on the backend availability
 another solution would be to use a worker consumer that updates a db shared by the front-end microservices, by using the worker we prevent 
 possible concurrency problem in the case of multiple front-end services. 
 
-##Development issues
+## Development issues
 
 - Dockerizing 
 	I encountered an ugly issue when making the multistage Dockerfile for the front-end service, to pack the web application I used com.github.eirslett:frontend-maven-plugin after a couple hours I found that the problem was in the image used for the build stage:
