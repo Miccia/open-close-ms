@@ -16,11 +16,24 @@ Everything id dockerized with a 1 publisher 2 subscriber configuration
 
 to run the solution you need to: 
 `docker compose up --build`
-inside the docker/all folder, the frontend addresses are: http://localhost:8081 and http://localhost:8082 
+inside the docker/all folder, the frontend addresses are: http://localhost:8081/ and http://localhost:8082/
 
 ##Testing
 
-to test the functionality you can access the REST apis under /docs or use the Postman collection found under utils
+to test the functionality you can access the REST apis under http://localhost:8080/swagger-ui/index.html#/ or use the justeat.postman_collection.json
+the microservices initial data status is:
+restaurant
+
+
+| id  | name | description | status |
+| ------------- | ------------- | ------------- | ------------- |
+|first|IGio|Korean|open|
+|second|Biondo Grano Roma|Pizza - Hamburger|closed|
+|third|Dumpling Bar - Meucci|Bao and Dumplings|open|
+|fourth|Trapizzino Testaccio|Panini - italiano|open|
+|fifth|Veri Peri Peri|Indian fried chicken|closed|
+|sixth|Instanbul Kebab|kebab piadine|open|
+|seventh|Yo Fusion|Sushi Bar|closed|
 
 ##Frontend-service
 
@@ -50,13 +63,11 @@ possible concurrency problem in the case of multiple front-end services.
 
 - Dockerizing 
 	I encountered an ugly issue when making the multistage Dockerfile for the front-end service, to pack the web application I used com.github.eirslett:frontend-maven-plugin after a couple hours I found that the problem was in the image used for the build stage:
-	Apparently <URL> linux Alpine miss the glibc libraries and that prevents the plugin to work properly, it also seems that the majority
-	of the maven docker image hosted on dockerhub also uses Alpine, I solved this by using this image:kemixkoo/debian-maven, however, implementing a custom image on a private registry would be preferable
+	Apparently [(issue)](https://github.com/eirslett/frontend-maven-plugin/issues/633 "(issue)") linux Alpine miss the glibc libraries and that prevents the plugin to work properly, it also seems that the majority
+	of the maven docker image hosted on dockerhub also uses Alpine, I solved this by using this image:'kemixkoo/debian-maven', however, creating a custom image on a private registry would be preferable.
 	
 
 - Testing kafka
 	I struggled a bit trying to mock a broker to run integration tests, there are solutions for this but I think that a complete integration
 	test is out of scope in this case, I then decided to mock all the integration layer by using 
 	@ConditionalOnProperty in the configuration classes and @MockBean for the consumers and producer to run tests against the REST service layer
-
-
