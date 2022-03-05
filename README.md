@@ -1,9 +1,4 @@
-#Open Close microservice solution
-
-
-**contents**
-
-[TOC]
+# Open Close microservice solution
 
 ## Architecture
 
@@ -45,7 +40,7 @@ this service implements a kafka listener to receive restaurants status change an
 It exposes a REST api to get a list of restaurants filtered by status and a React front-end
 that displays a list of all open restaurants
 
-##Backend-service
+## Backend-service
 
 this service implements a kafka producer to publish restaurants status change.
 It exposes a REST api to change a restaurant status and get the status by id
